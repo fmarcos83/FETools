@@ -5,7 +5,7 @@ set of tools to make several tasks related with fe development
 Tools
 ------
 
-- datagenerator
+- generate
     ::
 
         generates mock data into several formats options: r,v,n[,l]
