@@ -8,22 +8,22 @@ Tools
 - datagenerator
     ::
 
-    generates mock data into several formats
+        generates mock data into several formats options: r,v,n[,l]
 
-    options: r,v,n[,l]
+        - r indicates root for the data and filename where is going
+            to be stored
 
-    - r indicates root for the data and filename where is going
-        to be stored
+        - v comma separated values that indicate param names
 
-    - v comma separated values that indicate param names
+        - n number of records to store in the data container
 
-    - n number of records to store in the data container
-
-    - l[optional] landing area where is going to be stored the data
-      container
+        - l[optional] landing area where is going to be stored the data
+          container
 
 TODO
 -----
+
+- support for more formats than json (xml)
 
 - comma separated values must indicate data type with :
   e.g {param_name:param_type}
