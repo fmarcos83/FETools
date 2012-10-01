@@ -1,4 +1,5 @@
 Ext tools
+=========
 
 set of tools to make several tasks related with fe development
 
@@ -20,7 +21,7 @@ Tools
         - l[optional] landing area where is going to be stored the data
           container
 
-TODO
+Todo
 -----
 
 - support for more formats than json (xml)
