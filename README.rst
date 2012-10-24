@@ -3,6 +3,8 @@ Ext tools
 
 set of tools to make several tasks related with fe development
 
+depends on ZF
+
 Tools
 ------
 
@@ -18,8 +20,8 @@ Tools
 
         - n number of records to store in the data container
 
-        - l[optional] landing area where is going to be stored the data
-          container
+        - l [optional] landing area where is going to be stored the data
+            container
 
 Todo
 -----
@@ -31,7 +33,6 @@ Todo
 
 - support for as many seeders as param_types
 
-- create a command line class to generate another command tools in an elegant way
 
 - refactor generator with command line class
 
