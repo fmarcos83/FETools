@@ -1,5 +1,19 @@
 #!/usr/bin/php
 <?php
+/**
+ * This is an script to generate json mock data
+ *
+ * PHP version 5.3
+ *
+ * @category FMB
+ * @package  Tools
+ * @author   fmp245 <francisco.marcos@tic.alten.es>
+ * @license  http://framework.zend.com/license/new-bsd     New BSD License
+ * @version  SVN: $ Revision: $
+ * @date     $ Date: $
+ * @link     default
+ **/
+
 defined('APPLICATION_PATH') || define('APPLICATION_PATH', './application');
 defined('APPLICATION_ENV') || define('APPLICATION_ENV', 'development');
 
@@ -15,11 +29,13 @@ $options = array(
     'root|r=s' => 'Sets the username',
     'value|v=s' => 'Comma separated list of values',
     'num|n=i' => 'Number of values in mock data',
+    'landing|l=s' => 'Landing area for mock',
     'help|h' => 'Displays usage information'
 );
 
 $console = new Zend_Console_Getopt($options);
 
+$output = STDOUT;
 try{
     $console->parse();
     switch(false){
@@ -28,6 +44,17 @@ try{
     case $console->root:
         throw new Exception;
         break;
+    case !$console->landing:
+        //just in case landing option is set
+        //and can't write
+        if (!is_writable($console->landing)) {
+            throw new Exception;
+        }
+        $file = implode(
+            DIRECTORY_SEPARATOR, array($console->landing, $console->root, '.json')
+        );
+        $output = fopen($file, 'w+');
+        break;
     }
     $values = explode(',', $console->value);
     $num = $console->num;
@@ -35,8 +62,9 @@ try{
     $seeder = new AlphaSeeder;
     $generator = new DataGenerator($values, $seeder);
     $data = $generator->generate($root, $num);
-    echo json_encode($data);
-}catch(\Exception $e)
-{
+    fwrite($output, json_encode($data));
+}catch(\Exception $e){
+    $output = STDERR;
+    fwrite($output,  $e->getMessage());
     echo $console->getUsageMessage();
 }
