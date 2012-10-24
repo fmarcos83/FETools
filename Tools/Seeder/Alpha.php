@@ -2,7 +2,7 @@
 
 declare(encoding='UTF-8');
 
-namespace Seeder;
+namespace Tools\Seeder;
 
 class Alpha{
     const ini=0x41;
@@ -12,7 +12,7 @@ class Alpha{
         $str = '';
         while($len>0){
             $len-=1;
-            $str.=chr(mt_rand(self::ini,self::offset));
+            $str.=chr(mt_rand(self::ini, self::offset));
         }
         return $str;
     }

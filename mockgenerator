@@ -1,0 +1,42 @@
+#!/usr/bin/php
+<?php
+defined('APPLICATION_PATH') || define('APPLICATION_PATH', './application');
+defined('APPLICATION_ENV') || define('APPLICATION_ENV', 'development');
+
+require 'Zend/Loader/Autoloader.php';
+
+$autoloader = Zend_Loader_Autoloader::getInstance();
+$autoloader->registerNamespace('Tools');
+
+use Tools\Seeder\Alpha as AlphaSeeder;
+use Tools\Generator\Data as DataGenerator;
+
+$options = array(
+    'root|r=s' => 'Sets the username',
+    'value|v=s' => 'Comma separated list of values',
+    'num|n=i' => 'Number of values in mock data',
+    'help|h' => 'Displays usage information'
+);
+
+$console = new Zend_Console_Getopt($options);
+
+try{
+    $console->parse();
+    switch(false){
+    case !$console->help:
+    case $console->num:
+    case $console->root:
+        throw new Exception;
+        break;
+    }
+    $values = explode(',', $console->value);
+    $num = $console->num;
+    $root = $console->root;
+    $seeder = new AlphaSeeder;
+    $generator = new DataGenerator($values, $seeder);
+    $data = $generator->generate($root, $num);
+    echo json_encode($data);
+}catch(\Exception $e)
+{
+    echo $console->getUsageMessage();
+}
