@@ -14,8 +14,10 @@
  * @link     default
  **/
 
-defined('APPLICATION_PATH') || define('APPLICATION_PATH', './application');
+defined('APPLICATION_PATH') || define('APPLICATION_PATH', __DIR__);
 defined('APPLICATION_ENV') || define('APPLICATION_ENV', 'development');
+
+set_include_path(implode(PATH_SEPARATOR,array(get_include_path(),realpath(APPLICATION_PATH))));
 
 require 'Zend/Loader/Autoloader.php';
 
@@ -50,8 +52,9 @@ try{
         if (!is_writable($console->landing)) {
             throw new Exception;
         }
+        $path = realpath($console->landing);
         $file = implode(
-            DIRECTORY_SEPARATOR, array($console->landing, $console->root, '.json')
+            DIRECTORY_SEPARATOR, array($path, $console->root.'.json')
         );
         $output = fopen($file, 'w+');
         break;
